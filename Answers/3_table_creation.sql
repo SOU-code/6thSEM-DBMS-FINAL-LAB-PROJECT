@@ -1,7 +1,6 @@
 CREATE DATABASE order_schema;
 
-For Salesman:
---------------------
+---For Salesman
 CREATE TABLE SALESMAN
 (SALESMANID INT(4),
 NAME VARCHAR(20),
@@ -9,8 +8,7 @@ CITY VARCHAR(20),
 COMMISSION VARCHAR(20),
 PRIMARY KEY (SALESMANID));
 
-For Customer:
-----------------------
+---For Customer
 CREATE TABLE CUSTOMER
 (CUSTOMERID INT(4),
 CUSTNAME VARCHAR(20),
@@ -19,8 +17,7 @@ GRADE INT(3),
 PRIMARY KEY (CUSTOMERID),
 SALESMANID INT(4));
 
-For Orders:
------------------------
+---For Orders
 CREATE TABLE ORDERS
 (ORDNO INT(5),
 PURCHASEAMT INT(10),
