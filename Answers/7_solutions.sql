@@ -1,0 +1,48 @@
+--- Query 1
+--- Count the customers with grades above Bangalore’saverage
+SELECT GRADE,COUNT(DISTINCT CUSTOMERID)
+FROM CUSTOMER
+GROUP BY GRADE
+HAVING GRADE>(SELECT AVG(GRADE)
+FROM CUSTOMER
+WHERE CITY='BANGALORE');
+
+--- Query 2
+--- Find the name and numbers of all salesmen who had more than one customer
+SELECT SALESMANID, NAME
+FROM SALESMAN A
+WHERE 1<(SELECT COUNT(*)
+FROM CUSTOMER
+WHERE SALESMANID=A.SALESMANID);
+
+--- Query 3
+--- List all salesmen and indicate those who have and don’t have customers in their cities(Use UNION operation)
+SELECT SALESMAN.SALESMANID, NAME,CUSTNAME,COMMISSION
+FROM SALESMAN,CUSTOMER
+WHERE SALESMAN.CITY=CUSTOMER.CITY
+UNION
+SELECT SALESMANID,NAME,'NO MATCH',COMMISSION
+FROM SALESMAN
+WHERE NOT CITY=ANY
+(SELECT CITY
+FROM CUSTOMER)
+ORDER BY 2 DESC;
+
+--- Query 4
+--- Create a view that finds the salesman who has the customer with the highest order of a day
+CREATE VIEW ELITSALESMAN AS
+SELECT B.ORDDATE,A.SALESMANID,A.NAME
+FROM SALESMAN A,ORDERS B
+WHERE A.SALESMANID=B.SALESMANID
+AND B.PURCHASEAMT=(SELECT MAX(PURCHASEAMT)
+FROM ORDERS C
+WHERE C.ORDDATE=B.ORDDATE);
+
+SELECT * FROM ELITSALESMAN;
+
+--- Query 5
+--- Demonstrate the DELETE operation by removing salesman with id 1000. All his orders must also be deleted.
+DELETE FROM SALESMAN
+WHERE SALESMANID=1000;
+
+SELECT * FROM SALESMAN;
